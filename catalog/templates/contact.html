@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content%}
+
+<div class="row">
+        <div class="col-4" style="margin-left: 200px">
+      <div style="margin-top: 100px">
+        <div class="card border-dark">
+          <div class="card-header text-left">
+        <form method="post" action="">
+            {% csrf_token %}
+          <div class="mb-3">
+            <label for="exampleInputText" class="form-label">Имя</label>
+            <input type="text" class="form-control" id="exampleInputText" name="name" aria-describedby="addon-wrapping" required>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputText" class="form-label">Почта</label>
+            <div class="input-group flex-nowrap">
+              <span class="input-group-text" id="addon-wrapping">@</span>
+              <input type="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="emailHelp">
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputText" class="form-label">Сообщение</label>
+            <div class="form-floating">
+              <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+              <label for="floatingTextarea2">Comments</label>
+            </div>
+            <button type="submit" class="btn btn-primary" style="margin-top: 20px">Отправить</button>
+          </div>
+        </form>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="col-4" style="margin-top: 100px; margin-left: 150px">
+        <h3>Наши контакты</h3>
+        <p > Что то о нас<p>
+      </div>
+    </div>
+    </div>
+
+{% endblock %}
