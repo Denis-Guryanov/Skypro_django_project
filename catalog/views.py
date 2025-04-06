@@ -1,19 +1,25 @@
-from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.views.generic import ListView, DetailView, View
 
 from catalog.models import Product
 
 
-def home(request):
-    products = Product.objects.all()
-    context = {"products": products}
-    return render(request, "card.html", context)
+class HomeListView(ListView):
+    model = Product
 
 
-def product_detail(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    context = {"product": product}
-    return render(request, "product_detail.html", context)
+class ProductDetailView(DetailView):
+    model = Product
 
 
-def contact(request):
-    return render(request, "contact.html")
+class ContactFeedbackView(View):
+    def get(self, request):
+        # Отображаем форму
+        return render(request, "catalog/contact.html")
+
+    def post(self, request):
+        # Обработка отправки формы
+        name = request.POST.get("name")
+        message = request.POST.get("message")
+        return HttpResponse(f"Спасибо {name}! Сообщение получено.")
