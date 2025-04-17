@@ -1,4 +1,3 @@
-from django import forms
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.views.generic import (
@@ -9,13 +8,8 @@ from django.views.generic import (
     UpdateView,
 )
 
+from .forms import BlogPostForm
 from .models import BlogPost
-
-
-class BlogPostForm(forms.ModelForm):
-    class Meta:
-        model = BlogPost
-        fields = ["title", "content", "preview_image", "is_published"]
 
 
 class BlogPostCreateView(CreateView):
