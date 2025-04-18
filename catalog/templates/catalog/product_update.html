@@ -11,7 +11,7 @@
         <a href="{% url 'catalog:product_detail' product.pk %}" class="btn btn-secondary">Отмена</a>
         <!-- Кнопка для вызова модального окна -->
         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-            <i class="bi bi-trash"></i> Удалить пост
+            <i class="bi bi-trash"></i> Удалить продукт
         </button>
     </form>
 
@@ -20,11 +20,11 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Удалить пост</h5>
+                    <h5 class="modal-title" id="deleteModalLabel">Удалить </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                 </div>
                 <div class="modal-body">
-                    Вы уверены, что хотите удалить пост "{{ post.title }}"?
+                    Вы уверены, что хотите удалить продукт "{{ product.name }}"?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
