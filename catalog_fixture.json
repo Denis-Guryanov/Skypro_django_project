@@ -1,0 +1,111 @@
+[
+  {
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+      "name": "iphone 16 pro",
+      "description": "white color, 512 GB",
+      "image": "",
+      "category": 1,
+      "price": 115000,
+      "created_at": "2025-01-27",
+      "updated_at": "2025-01-27"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+      "name": "Samsung S25 Ultra",
+      "description": "",
+      "image": "",
+      "category": 1,
+      "price": 130000,
+      "created_at": "2025-01-27",
+      "updated_at": "2025-01-27"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+      "name": "Google Pixel 9 pro",
+      "description": "",
+      "image": "",
+      "category": 1,
+      "price": 110000,
+      "created_at": "2025-01-27",
+      "updated_at": "2025-01-27"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+      "name": "Xiaomi 14",
+      "description": "",
+      "image": "",
+      "category": 1,
+      "price": 100000,
+      "created_at": "2025-01-27",
+      "updated_at": "2025-01-27"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 5,
+    "fields": {
+      "name": "Sneakers",
+      "description": "",
+      "image": "",
+      "category": 2,
+      "price": 5000,
+      "created_at": "2025-01-27",
+      "updated_at": "2025-01-27"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 6,
+    "fields": {
+      "name": "T-shirt",
+      "description": "",
+      "image": "",
+      "category": 2,
+      "price": 2000,
+      "created_at": "2025-01-27",
+      "updated_at": "2025-01-27"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 7,
+    "fields": {
+      "name": "Trousers",
+      "description": "",
+      "image": "",
+      "category": 2,
+      "price": 4000,
+      "created_at": "2025-01-27",
+      "updated_at": "2025-01-27"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+      "name": "Смартфоны",
+      "description": ""
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+      "name": "Одежда",
+      "description": ""
+    }
+  }
+]
+
+
