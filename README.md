@@ -13,4 +13,4 @@ git clone https://github.com/Denis-Guryanov/django_project.git
 Установите зависимости 
 ```
 poetry install
-```
+``` 
