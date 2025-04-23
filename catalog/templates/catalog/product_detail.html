@@ -13,6 +13,7 @@
                             <div class="btn-group">
                                 <a class="btn btn-primary" href="{% url 'catalog:product_list' %}"
                                    role="button">Назад</a>
+                                {% if user.is_active %}
                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                         data-bs-target="#deleteModal">
                                     <i class="bi bi-trash"></i> Удалить продукт
@@ -44,6 +45,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                {% endif %}
                             </div>
                             <small class="text-body-secondary">9 mins</small>
                         </div>

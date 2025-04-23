@@ -7,10 +7,12 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.13"
+django-phonenumber-field = {extras = ["phonenumbers"], version = "^8.1.0"}
+django-countries = "^7.6.1"
+django = "4.2.2"
 
 
 [tool.poetry.group.dev.dependencies]
-django = "^5.1.7"
 psycopg2 = "^2.9.10"
 psycopg2-binary = "^2.9.10"
 python-dotenv = "^1.0.1"
