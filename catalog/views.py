@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.utils import timezone
 from django.views import View
@@ -36,7 +37,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy("catalog:product_list")
 
     def form_valid(self, form):
-        # Устанавливаем текущую дату и время создания
+        form.instance.owner = self.request.user  # Автоматическая привязка владельца
         form.instance.created_at = timezone.now()
         return super().form_valid(form)
 
@@ -52,11 +53,41 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "catalog/product_update.html"
     success_url = reverse_lazy("catalog:product_list")
 
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.owner != request.user:
+            raise PermissionDenied("Вы не являетесь владельцем этого продукта.")
+        return super().dispatch(request, *args, **kwargs)
+
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     template_name = "catalog/product_list.html"
     success_url = reverse_lazy("catalog:product_list")
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        is_owner = obj.owner == request.user
+        is_moderator = request.user.has_perm("catalog.can_unpublish_product")
+
+        if not (is_owner or is_moderator):
+            raise PermissionDenied("Недостаточно прав для удаления.")
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_success_url(self):
+        user = self.request.user
+        if user.has_perm("catalog.delete_product"):
+            return reverse("catalog:product_list")
+        raise PermissionDenied
+
+
+class ProductUnpublishView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        product = get_object_or_404(Product, pk=pk)
+        if request.user.has_perm("catalog.can_unpublish_product"):
+            product.is_published = False
+            product.save()
+        return redirect("catalog:product_list")
 
 
 class ContactFeedbackView(View):

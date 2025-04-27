@@ -35,6 +35,7 @@ class ProductForm(forms.ModelForm):
             "price",
             "category",
             "image",
+            "is_published",
         ]
 
     def clean_image(self):

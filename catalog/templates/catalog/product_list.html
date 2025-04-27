@@ -15,7 +15,7 @@
 
                                 <a class="btn btn-primary" href="{% url 'catalog:product_detail'  product.pk %}"
                                    role="button">Посмотреть</a>
-                                {% if user.is_active %}
+                                {% if user == product.owner %}
                                 <a class="btn btn-primary" href="{% url 'catalog:product_update' product.pk %}"
                                    role="button">Редактировать</a>
                                 {% endif%}

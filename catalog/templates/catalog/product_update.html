@@ -8,11 +8,15 @@
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+        {% if perms.catalog.can_unpublish_product%}
         <a href="{% url 'catalog:product_detail' product.pk %}" class="btn btn-secondary">Отмена</a>
+        {% endif %}
+        {% if perms.catalog.delete_product%}
         <!-- Кнопка для вызова модального окна -->
         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
             <i class="bi bi-trash"></i> Удалить продукт
         </button>
+        {% endif %}
     </form>
 
     <!-- Модальное окно для подтверждения удаления -->
