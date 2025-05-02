@@ -2,14 +2,15 @@
 name = "django-project"
 version = "0.1.0"
 description = ""
-authors = ["Your Name <you@example.com>"]
+authors = ["Denis <gruyanov19962010@yandex.ru>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.13"
-django-phonenumber-field = {extras = ["phonenumbers"], version = "^8.1.0"}
+django-phonenumber-field = { extras = ["phonenumbers"], version = "^8.1.0" }
 django-countries = "^7.6.1"
 django = "4.2.2"
+redis = "^5.2.1"
 
 
 [tool.poetry.group.dev.dependencies]

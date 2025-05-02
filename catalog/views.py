@@ -4,7 +4,9 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.utils import timezone
+from django.utils.decorators import method_decorator
 from django.views import View
+from django.views.decorators.cache import cache_page
 from django.views.generic import (
     ListView,
     CreateView,
@@ -14,15 +16,42 @@ from django.views.generic import (
 )
 
 from .forms import ProductForm
-from .models import Product
+from .models import Product, Category
+from .services import get_product_from_cache, get_products_by_category
 
 
 class ProductListView(ListView):
     model = Product
     template_name = "product_list.html"
-    context_object_name = "product"
+    context_object_name = "object_list"  # Изменено с "product" на "object_list"
+
+    def get_queryset(self):
+        return get_product_from_cache()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = Category.objects.all()  # Добавляем список категорий
+        return context
 
 
+class ProductsByCategoryView(ListView):
+    template_name = "catalog/product_list.html"  # Используем тот же шаблон
+    context_object_name = "object_list"
+
+    def get_queryset(self):
+        self.category_slug = self.kwargs.get("category_slug")
+        return get_products_by_category(self.category_slug)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = get_object_or_404(Category, slug=self.category_slug)
+        context["categories"] = Category.objects.all()
+        context["current_category"] = category  # Для подсветки активной категории
+        context["title"] = f'Продукты в категории "{category.name}"'
+        return context
+
+
+@method_decorator(cache_page(60 * 15), name="dispatch")
 class ProductDetailView(DetailView):
     model = Product
     template_name = "catalog/product_detail.html"

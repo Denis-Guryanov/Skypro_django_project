@@ -1,4 +1,7 @@
+from django.core.cache import cache
 from django.db import models
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 
 from users.models import CustomUser
 
@@ -6,6 +9,7 @@ from users.models import CustomUser
 class Category(models.Model):
     name = models.CharField(max_length=150, verbose_name="Название категории")
     description = models.CharField(max_length=150, verbose_name="Описание категории")
+    slug = models.SlugField(max_length=100, unique=True)
 
     class Meta:
         verbose_name = "Категория"
@@ -61,6 +65,12 @@ class Product(models.Model):
 
     def __str__(self):
         return f"{self.name} {self.description} {self.price}"
+
+    @receiver(post_save, sender=Category)
+    @receiver(post_delete, sender=Category)
+    def clear_category_cache(sender, instance, **kwargs):
+        # Сбрасываем кеш для этой категории
+        cache.delete(f"products_category_{instance.slug}")
 
     class Meta:
         verbose_name = "продукт"
