@@ -1,0 +1,63 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+{% block content%}
+
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row">
+            <!-- Блок категорий (левая колонка) -->
+            <div class="col-md-3 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Категории</h5>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        <a href="{% url 'catalog:product_list' %}"
+                           class="list-group-item list-group-item-action {% if not current_category %}active{% endif %}">
+                            Все товары
+                        </a>
+                        {% for category in categories %}
+                        <a href="{% url 'catalog:products_by_category' category.slug %}"
+                           class="list-group-item list-group-item-action {% if current_category == category %}active{% endif %}">
+                            {{ category.name }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Блок продуктов (правая колонка) -->
+            <div class="col-md-9">
+                {% if current_category %}
+                <h2 class="mb-4">{{ current_category.name }}</h2>
+                {% endif %}
+
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    {% for product in object_list %}
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="{{ product.image | media_filter }}" class="card-img-top" alt="{{ product.name }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <p class="card-text">{{ product.description|truncatechars:100 }}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a class="btn btn-primary" href="{% url 'catalog:product_detail' product.pk %}"
+                                           role="button">Посмотреть</a>
+                                        {% if user == product.owner %}
+                                        <a class="btn btn-primary" href="{% url 'catalog:product_update' product.pk %}"
+                                           role="button">Редактировать</a>
+                                        {% endif %}
+                                    </div>
+                                    <small class="text-body-secondary">{{ product.price }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
